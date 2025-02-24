@@ -35,6 +35,7 @@ export default {
   height: 100vh;
   background: url('../assets/images/background-image.png') no-repeat center center/cover;
   overflow: hidden;
+  z-index: -1; /* ✅ Ensures the background stays behind everything */
 }
 
 /* Stars Animation */
@@ -44,11 +45,13 @@ export default {
   height: 100%;
   background: radial-gradient(white 2px, transparent 3px);
   background-size: 100px 100px;
-  animation: twinkle 3s infinite alternate ease-in-out;
+  animation: twinkle 5s infinite alternate ease-in-out;
+  z-index: -1; /* ✅ Keeps stars behind foreground content */
 }
 
 @keyframes twinkle {
-  0% { opacity: 0.8; }
+  0% { opacity: 0.7; }
+  50% { opacity: 0.85; }
   100% { opacity: 1; }
 }
 
@@ -60,7 +63,8 @@ export default {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   filter: blur(10px);
-  animation: floatClouds linear infinite;
+  animation: floatClouds 30s linear infinite;
+  z-index: -1; /* ✅ Ensures clouds remain in the background */
 }
 
 @keyframes floatClouds {

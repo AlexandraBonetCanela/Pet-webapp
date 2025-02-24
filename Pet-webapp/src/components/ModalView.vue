@@ -18,7 +18,7 @@ export default {
 </script>
 
 <template>
-  <div v-if="modalState" class="modal-overlay">
+  <div v-if="modalState" class="modal-overlay" @click.self="closeModal">
     <div class="modal">
       <h2>{{ title }}</h2>
       <slot></slot> <!-- Injects form from child components -->
