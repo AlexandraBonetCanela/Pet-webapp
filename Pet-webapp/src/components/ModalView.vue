@@ -110,6 +110,25 @@ export default {
   background: #ff79b0;
 }
 
+  .custom-select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 6px;
+    background: #222;
+    color: white;
+    border: 1px solid #555;
+    font-size: 16px;
+    cursor: pointer;
+    transition: border-color 0.3s;
+  }
+
+  .custom-select:focus {
+    border-color: #ff4081;
+    outline: none;
+  }
+
+
 /* Close Button */
 .close-btn {
   background: transparent;
@@ -127,7 +146,24 @@ export default {
     background:  #333;
     color: white;
 }
+  /* Custom Select Dropdown */
+  .custom-select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 6px;
+    background: #222;
+    color: white;
+    border: 1px solid #555;
+    font-size: 16px;
+    cursor: pointer;
+    transition: border-color 0.3s;
+  }
 
+  .custom-select:focus {
+    border-color: #ff4081;
+    outline: none;
+  }
 
 /* Error Message */
 .error {
