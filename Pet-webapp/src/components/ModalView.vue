@@ -20,10 +20,9 @@ export default {
 <template>
   <div v-if="modalState" class="modal-overlay" @click.self="closeModal">
     <div class="modal">
+      <button class="close-btn" @click="closeModal">&times;</button>
       <h2>{{ title }}</h2>
       <slot></slot> <!-- Injects form from child components -->
-
-      <button class="close-btn" @click="closeModal">Close</button>
     </div>
   </div>
 </template>
@@ -85,67 +84,24 @@ export default {
   color: white;
   font-size: 16px;
 }
-
-/* Input Focus */
-.modal input:focus {
-  outline: none;
-  border-color: #ff4081; /* Highlight on focus */
-}
-
-/* Buttons */
-.modal button {
-  padding: 12px;
-  margin-top: 10px;
-  border: none;
-  background: #ff4081; /* Primary button color */
-  color: white;
-  cursor: pointer;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: bold;
-  transition: background 0.3s ease-in-out;
-}
-
-.modal button:hover {
-  background: #ff79b0;
-}
-
-  .custom-select {
-    width: 100%;
-    padding: 10px;
-    margin-top: 8px;
-    border-radius: 6px;
-    background: #222;
+  .close-btn {
+    position: relative;
+    top: 10px;
+    width: 30px;
+    right: 10px;
+    float: right;
+    background: none;
+    border: none;
+    font-size: 24px;
     color: white;
-    border: 1px solid #555;
-    font-size: 16px;
     cursor: pointer;
-    transition: border-color 0.3s;
+    padding: 5px;
+    z-index: 1000; /* Ensures it stays within the modal */
   }
-
-  .custom-select:focus {
-    border-color: #ff4081;
-    outline: none;
-  }
-
-
-/* Close Button */
-.close-btn {
-  background: transparent;
-  color: #aaa;
-  font-weight: bold;
-  border: 1px solid #aaa;
-  padding: 10px;
-  width: 100%;
-  border-radius: 6px;
-  margin-top: 15px;
-  cursor: pointer;
-}
 
   .close-btn:hover {
-    background:  #333;
-    color: white;
-}
+    color: #ff4081;
+  }
   /* Custom Select Dropdown */
   .custom-select {
     width: 100%;
@@ -171,4 +127,23 @@ export default {
   font-size: 14px;
   margin-top: 12px;
 }
+
+  /* Action Buttons */
+  .modal button {
+    background: #ff4081;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+  }
+
+  .modal button:hover {
+    background: #ff79b0;
+  }
+
 </style>

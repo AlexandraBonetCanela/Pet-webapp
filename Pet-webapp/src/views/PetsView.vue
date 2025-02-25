@@ -15,7 +15,7 @@
     <button class="add-pet-btn" @click="openAddPetModal">Add Pet</button>
 
     <AddPetModal v-if="isAddPetModalOpen" :closeModal="closeAddPetModal" :petTypes="petTypes" />
-    <PetModal v-if="isPetModalOpen" :modalState="isPetModalOpen" :closeModal="closePetModal" :selectedPet="selectedPet" />
+    <PetModal v-if="isPetModalOpen" :modalState="isPetModalOpen" :closeModal="closePetModal" :selectedPetId="selectedPetId" />
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
       store: usePetStore(),
       isAddPetModalOpen: false,
       isPetModalOpen: false,
-      selectedPet: null,
+      selectedPetId: null,
       petTypes: {
         "CAT_GRASS": "Cat Grass",
         "DEVIL_BLACK_CAT_SIBLINGS": "Devil Black Cat Siblings",
@@ -63,12 +63,12 @@ export default {
       return petImages[type] || "../assets/pets/default-pet.png";
     },
     openPetModal(pet) {
-      this.selectedPet = pet;
+      this.selectedPetId = pet.id;
       this.isPetModalOpen = true;
     },
     closePetModal() {
       this.isPetModalOpen = false;
-      this.selectedPet = null;
+      this.selectedPetId = null;
     },
     openAddPetModal() {
       this.isAddPetModalOpen = true;

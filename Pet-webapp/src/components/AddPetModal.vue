@@ -15,7 +15,6 @@
 
         <button type="submit" class="action-btn">Add Pet</button>
       </form>
-      <button class="close-btn" @click="closeModal">Close</button>
     </div>
   </div>
 </template>
@@ -71,23 +70,5 @@ export default {
   text-align: center;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
   color: white;
-}
-
-/* Action Buttons */
-.action-btn, .close-btn {
-  background: #ff4081;
-  color: white;
-  padding: 10px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background 0.3s;
-  width: 100%;
-}
-
-.action-btn:hover, .close-btn:hover {
-  background: #ff79b0;
 }
 </style>

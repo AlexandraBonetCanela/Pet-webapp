@@ -6,13 +6,11 @@ import RegisterModal from "./components/RegisterModal.vue";
 import LoginModal from "./components/LoginModal.vue";
 import AnimatedBackground from "./components/AnimatedBackground.vue";
 import PetsView from "./views/PetsView.vue";
-import CatGrass from "./components/CatGrass.vue";
 
 export default {
   name: "App",
   components: {
     AnimatedBackground,
-    CatGrass,
     NavBar,
     RegisterModal,
     LoginModal,
@@ -32,6 +30,5 @@ export default {
   <NavBar />
   <RegisterModal />
   <LoginModal />
-<!--  <CatGrass />-->
   <PetsView v-if="isLogged" />
 </template>

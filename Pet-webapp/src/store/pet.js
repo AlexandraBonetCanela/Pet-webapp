@@ -89,5 +89,45 @@ export const usePetStore = defineStore("pet", {
                 console.error("Error deleting pet:", error);
             }
         },
+
+        async updatePetActivity(petId, activity) {
+            console.log("Inside updatePetActivity");
+            const userStore = useUserStore();
+            if (!userStore.getUserId) return;
+
+            this.loading = true;
+            this.error = null;
+
+            try {
+                const response = await fetch(`http://localhost:8080/pet/${petId}`, {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": `Bearer ${userStore.getToken}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ activity }),
+                });
+
+                if (!response.ok) throw new Error("Failed to update pet activity.");
+
+                const updatedPet = await response.json();
+
+                // Update the pet in the store
+                this.pets = this.pets.map(pet => pet.id === updatedPet.id ? updatedPet : pet);
+            } catch (error) {
+                this.error = error.message;
+                console.error("Error updating pet activity:", error);
+            } finally {
+                this.loading = false;
+            }
+        },
+
+        async playWithPet(petId) {
+            return this.updatePetActivity(petId, "PLAY");
+        },
+
+        async feedPet(petId) {
+            return this.updatePetActivity(petId, "FEED");
+        }
     },
 });

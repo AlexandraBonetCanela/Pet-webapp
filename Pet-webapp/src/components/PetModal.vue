@@ -1,19 +1,22 @@
 <template>
-  <ModalView :title="selectedPet?.name" :modalState="modalState" :closeModal="closeModal">
+  <ModalView :title="pet?.name" :modalState="modalState" :closeModal="closeModal">
     <div class="pet-details">
-      <img :src="getPetImage(selectedPet?.type)" alt="Pet Image" class="pet-image-large" />
+      <img :src="getPetImage(pet?.type)" alt="Pet Image" class="pet-image-large" />
       <p>Type: {{ formattedPetType }}</p>
-      <p>Happiness Level: {{ selectedPet?.happinessLevel }}</p>
-      <p>Food Level: {{ selectedPet?.foodLevel }}</p>
+      <p>Happiness Level: {{ pet?.happinessLevel }}</p>
+      <p>Food Level: {{ pet?.foodLevel }}</p>
 
       <button class="action-btn" @click="feedPet">Feed</button>
       <button class="action-btn" @click="playWithPet">Play</button>
+      <button class="action-btn" @click="deletePet">Delete Pet</button>
     </div>
   </ModalView>
 </template>
 
 <script>
 import ModalView from "../components/ModalView.vue";
+import { usePetStore } from "../store/pet.js";
+import { computed, watch, ref } from "vue";
 
 export default {
   name: "PetDetailsModal",
@@ -21,34 +24,62 @@ export default {
   props: {
     modalState: Boolean,
     closeModal: Function,
-    selectedPet: Object,
+    selectedPetId: String, // Pass the pet ID instead of the full object
   },
-  computed: {
-    formattedPetType() {
+  setup(props) {
+    const petStore = usePetStore();
+    const pet = ref(null);
+
+    // Watch for changes in the selected pet ID and fetch updated details
+    watch(
+        () => props.selectedPetId,
+        (newId) => {
+          if (newId) {
+            pet.value = petStore.pets.find((p) => p.id === newId) || null;
+          }
+        },
+        { immediate: true } // Fetch immediately when the component mounts
+    );
+
+    const formattedPetType = computed(() => {
       const petTypes = {
         "CAT_GRASS": "Cat Grass",
         "DEVIL_BLACK_CAT_SIBLINGS": "Devil Black Cat Siblings",
         "EXTINGUISHER": "Extinguisher",
         "BUS_STOP": "Bus Stop",
       };
-      return petTypes[this.selectedPet?.type] || this.selectedPet?.type;
-    },
-  },
-  methods: {
-    getPetImage(type) {
+      return petTypes[pet.value?.type] || pet.value?.type;
+    });
+
+    const getPetImage = (type) => {
       const petImages = {
         "CAT_GRASS": new URL('../assets/pets/grass/healthy-grass.png', import.meta.url).href,
       };
       return petImages[type] || "../assets/pets/default-pet.png";
-    },
-    async feedPet() {
-      console.log("Feeding pet:", this.selectedPet.name);
-      // Call API to update pet food level (to be implemented)
-    },
-    async playWithPet() {
-      console.log("Playing with pet:", this.selectedPet.name);
-      // Call API to update pet happiness (to be implemented)
-    },
+    };
+
+    const feedPet = async () => {
+      if (pet.value) {
+        await petStore.feedPet(pet.value.id);
+        pet.value = petStore.pets.find((p) => p.id === pet.value.id); // Refresh pet data
+      }
+    };
+
+    const playWithPet = async () => {
+      if (pet.value) {
+        await petStore.playWithPet(pet.value.id);
+        pet.value = petStore.pets.find((p) => p.id === pet.value.id); // Refresh pet data
+      }
+    };
+
+    const deletePet = async () => {
+      if (pet.value) {
+        await petStore.deletePet(pet.value.id);
+        props.closeModal();
+      }
+    };
+
+    return { pet, formattedPetType, getPetImage, feedPet, playWithPet, deletePet };
   },
 };
 </script>
@@ -83,4 +114,3 @@ export default {
   background: #ff79b0;
 }
 </style>
-yle>
