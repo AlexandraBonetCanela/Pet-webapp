@@ -6,8 +6,8 @@
 
     <ul v-if="pets.length > 0">
       <li v-for="pet in pets" :key="pet.id" @click="openPetModal(pet)">
-        <img :src="getPetImage(pet.type)" alt="Pet Image" class="pet-image" />
-        {{ pet.name }} ({{ formattedPetType(pet.type) }})
+        <img :src="petStore.getPetImage(pet.type)" alt="Pet Image" class="pet-image" />
+        {{ pet.name }} ({{ petStore.getPetType(pet.type) }})
       </li>
     </ul>
     <p v-else>No pets found.</p>
@@ -35,12 +35,6 @@ export default {
       isAddPetModalOpen: false,
       isPetModalOpen: false,
       selectedPetId: null,
-      petTypes: {
-        "CAT_GRASS": "Cat Grass",
-        "DEVIL_BLACK_CAT_SIBLINGS": "Devil Black Cat Siblings",
-        "EXTINGUISHER": "Extinguisher",
-        "BUS_STOP": "Bus Stop",
-      },
     };
   },
   computed: {
@@ -59,13 +53,7 @@ export default {
   },
   methods: {
     formattedPetType(type) {
-      return this.petTypes[type] || type;
-    },
-    getPetImage(type) {
-      const petImages = {
-        "CAT_GRASS": new URL("../assets/pets/grass/healthy-grass.png", import.meta.url).href,
-      };
-      return petImages[type] || "../assets/pets/default-pet.png";
+      return this.petStore.getPetType[type] || type;
     },
     openPetModal(pet) {
       this.selectedPetId = pet.id;

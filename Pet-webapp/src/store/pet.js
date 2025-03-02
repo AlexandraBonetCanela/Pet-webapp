@@ -6,7 +6,23 @@ export const usePetStore = defineStore("pet", {
         pets: [],
         loading: false,
         error: null,
+        petTypes: {
+            "CAT_GRASS": "Cat Grass",
+            "DEVIL_BLACK_CAT_SIBLINGS": "Devil Black Cat Siblings",
+            "EXTINGUISHER": "Extinguisher",
+            "BUS_STOP": "Bus Stop",
+        },
+        petImages: {
+            "CAT_GRASS": new URL("../assets/pets/grass/healthy-grass.png", import.meta.url).href,
+            "DEVIL_BLACK_CAT_SIBLINGS": new URL("../assets/pets/blackcatbrothers/black-cats-brothers.png", import.meta.url).href,
+            "EXTINGUISHER": new URL("../assets/pets/extinguisher/extinguisher.png", import.meta.url).href,
+            "BUS_STOP": new URL("../assets/pets/busstop/bus-stop.png", import.meta.url).href,
+        }
     }),
+    getters: {
+        getPetImage: (state) => (type) => state.petImages[type] || "../assets/pets/default-pet.png",
+        getPetType: (state) => (type) => state.petTypes[type] || type,
+    },
     actions: {
         async fetchPets() {
             const userStore = useUserStore();

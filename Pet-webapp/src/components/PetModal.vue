@@ -40,23 +40,13 @@ export default {
         },
         { immediate: true } // Fetch immediately when the component mounts
     );
-
     const formattedPetType = computed(() => {
-      const petTypes = {
-        "CAT_GRASS": "Cat Grass",
-        "DEVIL_BLACK_CAT_SIBLINGS": "Devil Black Cat Siblings",
-        "EXTINGUISHER": "Extinguisher",
-        "BUS_STOP": "Bus Stop",
-      };
-      return petTypes[pet.value?.type] || pet.value?.type;
+      return petStore.petTypes[pet.value?.type] || pet.value?.type;
     });
 
-    const getPetImage = (type) => {
-      const petImages = {
-        "CAT_GRASS": new URL('../assets/pets/grass/healthy-grass.png', import.meta.url).href,
-      };
-      return petImages[type] || "../assets/pets/default-pet.png";
-    };
+    const getPetImage = computed(() => (type) => {
+      return petStore.petImages[type] || "../assets/pets/default-pet.png";
+    });
 
     const feedPet = async () => {
       if (pet.value) {
