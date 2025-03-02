@@ -84,7 +84,7 @@ export default {
   color: white;
   font-size: 16px;
 }
-  .close-btn {
+  .modal .close-btn {
     position: relative;
     top: 10px;
     width: 30px;
@@ -129,7 +129,7 @@ export default {
 }
 
   /* Action Buttons */
-  .modal button {
+  .modal button:not(.close-btn) {
     background: #ff4081;
     color: white;
     padding: 10px;
