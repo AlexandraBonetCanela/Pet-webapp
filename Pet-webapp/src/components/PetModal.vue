@@ -3,8 +3,23 @@
     <div class="pet-details">
       <img :src="getPetImage(pet?.type)" alt="Pet Image" class="pet-image-large" />
       <p>Type: {{ formattedPetType }}</p>
-      <p>Happiness Level: {{ pet?.happinessLevel }}</p>
-      <p>Food Level: {{ pet?.foodLevel }}</p>
+
+      <!-- Happiness Level Bar -->
+      <div class="level-container">
+        <p>Happiness Level</p>
+        <div class="progress-bar">
+          <div class="progress-fill" :style="{ width: `${(pet?.happinessLevel / 5) * 100}%` }"></div>
+        </div>
+      </div>
+
+      <!-- Food Level Bar -->
+      <div class="level-container">
+        <p>Food Level</p>
+        <div class="progress-bar">
+          <div class="progress-fill" :style="{ width: `${(pet?.foodLevel / 5) * 100}%` }"></div>
+        </div>
+        <br/>
+      </div>
 
       <button class="action-btn" @click="feedPet">Feed</button>
       <button class="action-btn" @click="playWithPet">Play</button>
@@ -80,8 +95,8 @@ export default {
 }
 
 .pet-image-large {
-  width: 100px;
-  height: 100px;
+  width: 250px;
+  height: 250px;
   border-radius: 6px;
   margin-bottom: 10px;
 }
@@ -103,4 +118,27 @@ export default {
 .action-btn:hover {
   background: #ff79b0;
 }
+
+/* Level Container */
+.level-container {
+  text-align: center;
+  margin: 10px 0;
+}
+
+/* Progress Bar */
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #ff4081;
+  transition: width 0.3s ease-in-out;
+}
+
 </style>
