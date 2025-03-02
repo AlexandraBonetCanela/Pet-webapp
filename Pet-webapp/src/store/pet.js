@@ -16,7 +16,13 @@ export const usePetStore = defineStore("pet", {
             this.error = null;
 
             try {
-                const response = await fetch(`http://localhost:8080/pet/${userStore.getUserId}`, {
+                let endpoint = `http://localhost:8080/pet/${userStore.getUserId}`;
+
+                if(userStore.role === "ADMIN"){
+                    endpoint = `http://localhost:8080/pet`;
+                }
+
+                const response = await fetch(endpoint, {
                     method: "GET",
                     headers: {
                         "Authorization": `Bearer ${userStore.getToken}`,

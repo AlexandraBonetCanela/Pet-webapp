@@ -7,6 +7,7 @@ export const useUserStore = defineStore("user", {
         name: "",
         token: "",
         userId: "", // Store userId from JWT
+        role: "",
         isLoginModalOpen: false, // ✅ Ensure this exists
         isRegisterModalOpen: false, // ✅ Ensure this exists
     }),
@@ -20,6 +21,7 @@ export const useUserStore = defineStore("user", {
             try {
                 const decoded = jwtDecode(payload.token);
                 this.userId = decoded.userId; // Assuming userId is stored in JWT
+                this.role = decoded.role;
             } catch (error) {
                 console.error("Failed to decode JWT:", error);
             }
@@ -31,6 +33,7 @@ export const useUserStore = defineStore("user", {
             this.name = "";
             this.token = "";
             this.userId = ""; // Reset userId
+            this.role = "";
             this.isLoginModalOpen = false;
             this.isRegisterModalOpen = false;
             localStorage.removeItem("token");
@@ -47,5 +50,6 @@ export const useUserStore = defineStore("user", {
         getName: (state) => state.name,
         getToken: (state) => state.token,
         getUserId: (state) => state.userId,
+        getRole: (state) => state.role,
     },
 });

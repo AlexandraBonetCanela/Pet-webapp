@@ -1,6 +1,6 @@
 <template>
   <div class="pets-container">
-    <h2>Your Pets</h2>
+    <h2>{{isAdmin ? "All Pets:" : "Your Pets"}}</h2>
     <p v-if="isLoading">Loading pets...</p>
     <p v-if="error">{{ error }}</p>
 
@@ -12,7 +12,7 @@
     </ul>
     <p v-else>No pets found.</p>
 
-    <button class="add-pet-btn" @click="openAddPetModal">Add Pet</button>
+    <button v-if="!isAdmin" class="add-pet-btn" @click="openAddPetModal">Add Pet</button>
 
     <AddPetModal v-if="isAddPetModalOpen" :closeModal="closeAddPetModal" :petTypes="petTypes" />
     <PetModal v-if="isPetModalOpen" :modalState="isPetModalOpen" :closeModal="closePetModal" :selectedPetId="selectedPetId" />
@@ -21,6 +21,7 @@
 
 <script>
 import { usePetStore } from "../store/pet";
+import { useUserStore} from "../store/user.js";
 import AddPetModal from "../components/AddPetModal.vue";
 import PetModal from "../components/PetModal.vue";
 
@@ -29,7 +30,8 @@ export default {
   components: { AddPetModal, PetModal },
   data() {
     return {
-      store: usePetStore(),
+      petStore: usePetStore(),
+      userStore: useUserStore(),
       isAddPetModalOpen: false,
       isPetModalOpen: false,
       selectedPetId: null,
@@ -43,14 +45,17 @@ export default {
   },
   computed: {
     pets() {
-      return this.store.pets;
+      return this.petStore.pets;
     },
     isLoading() {
-      return this.store.loading;
+      return this.petStore.loading;
     },
     error() {
-      return this.store.error;
+      return this.petStore.error;
     },
+    isAdmin(){
+      return this.userStore.getRole === 'ADMIN';
+    }
   },
   methods: {
     formattedPetType(type) {
@@ -78,7 +83,7 @@ export default {
     },
   },
   mounted() {
-    this.store.fetchPets();
+    this.petStore.fetchPets();
   },
 };
 </script>
