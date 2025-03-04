@@ -8,7 +8,7 @@
 
         <label for="type">Type:</label>
         <select id="type" v-model="newPet.type" required class="custom-select">
-          <option v-for="(label, key) in petTypes" :key="key" :value="key">
+          <option v-for="(label, key) in store.petTypes" :key="key" :value="key">
             {{ label }}
           </option>
         </select>
@@ -26,7 +26,6 @@ export default {
   name: "AddPetModal",
   props: {
     closeModal: Function,
-    petTypes: Object, // Pet types now passed as a prop
   },
   data() {
     return {
